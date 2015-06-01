@@ -3,6 +3,8 @@
 
 This is a blog for posting all your latest ideas, thoughts and discoveries. Post anything and everything, there is no limit!
 
+Use your gmail credentials to login and create your posts!
+
 ## Development
 
 Run:
