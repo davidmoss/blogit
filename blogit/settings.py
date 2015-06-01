@@ -18,8 +18,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-
 from .boot import get_app_config
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_app_config().secret_key
 
@@ -27,6 +27,12 @@ SECRET_KEY = get_app_config().secret_key
 DEBUG = True
 
 TEMPLATE_DEBUG = True
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'djangae.db.backends.appengine'
+    }
+}
 
 # Application definition
 
@@ -43,6 +49,8 @@ INSTALLED_APPS = (
     'cspreports',
     'djangae.contrib.gauth.datastore',
     'djangae.contrib.security',
+    'bootstrap3',
+    'blog',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,6 +61,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'csp.middleware.CSPMiddleware',
     'session_csrf.CsrfMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'djangosecure.middleware.SecurityMiddleware',
 )
 
@@ -64,8 +73,15 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
-    "session_csrf.context_processor"
+    "session_csrf.context_processor",
 )
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+    },
+]
 
 SECURE_CHECKS = [
     "djangosecure.check.sessions.check_session_cookie_secure",
@@ -88,6 +104,15 @@ ROOT_URLCONF = 'blogit.urls'
 
 WSGI_APPLICATION = 'blogit.wsgi.application'
 
+AUTH_USER_MODEL = 'djangae.GaeUser'
+# AUTH_USER_MODEL = 'djangae.GaeDatastoreUser'
+DJANGAE_ALLOW_USER_PRE_CREATION = True
+
+AUTHENTICATION_BACKENDS = (
+    'djangae.contrib.gauth.datastore.backends.AppEngineUserAPIBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
@@ -106,17 +131,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
+TEST_RUNNER = 'djangae.test_runner.SkipUnsupportedRunner'
 
 if DEBUG:
     CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
 
 # sensible default CPS settings, feel free to modify them
 CSP_DEFAULT_SRC = ("'self'", "*.gstatic.com")
-CSP_STYLE_SRC = ("'self'", "fonts.googleapis.com", "*.gstatic.com")
-CSP_FONT_SRC = ("'self'", "themes.googleusercontent.com", "*.gstatic.com")
+CSP_STYLE_SRC = ("'self'", "fonts.googleapis.com", "*.gstatic.com", "maxcdn.bootstrapcdn.com")
+CSP_FONT_SRC = ("'self'", "themes.googleusercontent.com", "*.gstatic.com", "maxcdn.bootstrapcdn.com")
 CSP_FRAME_SRC = ("'self'", "www.google.com", "www.youtube.com", "accounts.google.com", "apis.google.com", "plus.google.com")
-CSP_SCRIPT_SRC = ("'self'", "*.googleanalytics.com", "*.google-analytics.com", "ajax.googleapis.com")
+CSP_SCRIPT_SRC = ("'self'", "*.googleanalytics.com", "*.google-analytics.com", "ajax.googleapis.com", "maxcdn.bootstrapcdn.com")
 CSP_IMG_SRC = ("'self'", "data:", "s.ytimg.com", "*.googleusercontent.com", "*.gstatic.com")
 CSP_CONNECT_SRC = ("'self'", "plus.google.com", "www.google-analytics.com")
 

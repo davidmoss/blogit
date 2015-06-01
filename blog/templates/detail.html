@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block nav-home %}<a class="blog-nav-item active" href="{% url 'blog:post_list' %}">Home</a>{% endblock %}
+
+{% block content %}
+
+    <!-- Post  -->
+    <div class="blog-post">
+        {% if user.is_authenticated %}
+        <a class="remove" href="{% url 'blog:post_delete' post.id %}"><span class="glyphicon glyphicon-remove-circle"></span></a>
+        {% endif %}
+        <h2 class="blog-post-title">{{ post.title }}</h2>
+        <p class="blog-post-meta">{{ post.created }}</p>
+        <p>{{ post.body|linebreaks }}</p>
+    </div>
+
+    <!-- Comments  -->
+    <p>Comments</p>
+    {% for comment in comments %}
+        {% if user.is_authenticated %}
+        <a class="remove" href="{% url 'blog:delete_comment' post.id comment.id %}"><span class="glyphicon glyphicon-remove-circle"></span></a>
+        {% endif %}
+        <div class="blog-post-meta">{{ comment.author }} | {{ comment.created }}</div>
+        <blockquote>
+            <p>{{ comment.body|linebreaks }}</p>
+        </blockquote>
+    {% endfor %}
+
+    <!-- New Comment  -->
+    {% if user.is_authenticated %}
+    <p>Add a comment</p>
+    <!-- Comment form  -->
+    <form action="{% url 'blog:add_comment' post.id %}" method="POST">
+    {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Submit
+            </button>
+        {% endbuttons %}
+    </form>
+    {% endif %}
+
+{% endblock %}

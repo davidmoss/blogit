@@ -17,6 +17,11 @@ indexes:
   - name: __key__
     direction: desc
 
+- kind: djangae_gaedatastoreuser
+  properties:
+  - name: __key__
+    direction: desc
+
 - kind: django_admin_log
   properties:
   - name: user_id
@@ -32,3 +37,10 @@ indexes:
   properties:
   - name: app
   - name: name
+
+- kind: post_post
+  properties:
+  - name: _idx_month_created
+  - name: _idx_year_created
+  - name: created
+    direction: desc

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block nav-home %}<a class="blog-nav-item active" href="{% url 'blog:post_list' %}">Home</a>{% endblock %}
+
+{% block content %}
+
+    <!-- Posts  -->
+    {% for post in posts %}
+    <div class="blog-post">
+        <a class="remove" href="{% url 'blog:post_delete' post.id %}"><span class="glyphicon glyphicon-remove-circle"></span></a>
+        <h2 class="blog-post-title"><a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a></h2>
+        <p class="blog-post-meta">{{ post.created }}</p>
+        <p>{{ post.synopsis }}</p>
+    </div>
+    {% empty %}
+    <div>
+        {% if user.is_authenticated %}
+            <p>Go on, post your first entry!</p>
+        {% else %}
+            <p>Login and post your first entry!</p>
+        {% endif %}
+        <a href="{% url 'blog:post_create' %}">
+            <button class="btn btn-primary">
+                Create First Post
+            </button>
+        </a>
+    </div>
+    {% endfor %}
+
+    <!-- Next/Prev page links  -->
+    {% if posts %}
+        {% bootstrap_pagination page_obj %}
+    {% endif %}
+
+{% endblock %}

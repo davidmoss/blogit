@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block nav-home %}<a class="blog-nav-item active" href="{% url 'blog:post_list' %}">Home</a>{% endblock %}
+
+{% block content %}
+    <form method="post" action="" role="form" class="form">
+        {% csrf_token %}
+        {% block confirmation_msg %}
+        <p>Are you sure you want to delete <b>{{ post.title }}?</b></p>
+        {% endblock %}
+        <div class="delete-buttons">
+            <button type="submit" class="btn btn-danger">
+                Delete
+            </button>
+            <a class="btn btn-link" href="#" id="backLink">
+                Cancel
+            </a>
+        </div>
+    </form>
+{% endblock %}

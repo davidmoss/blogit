@@ -1,0 +1,25 @@
+
+  <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+    <div class="sidebar-module sidebar-module-inset">
+      <h4>About</h4>
+      <p>Hi, I'm a web developer with 10 years experience in developing large web application. This blog outlines the ideas thoughts and discusssions I've had along the way and the best bits of what i've discovered through out.</p>
+    </div>
+    <div class="sidebar-module">
+      <h4>Archives</h4>
+      <ol class="list-unstyled">
+        {% for post_year, post_months in post_dates.items %}
+          {% for post_month, post_date in post_months.items %}
+            <li><a href="?post_filter={{ post_date|date:'n_Y' }}">{{ post_date|date:'F Y' }}</a></li>
+          {% endfor %}
+        {% endfor %}
+      </ol>
+    </div>
+    <div class="sidebar-module">
+      <h4>Elsewhere</h4>
+      <ol class="list-unstyled">
+        <li><a href="https://github.com/davidmoss" target="_blank">GitHub</a></li>
+        <li><a href="https://twitter.com/mossy" target="_blank">Twitter</a></li>
+        <li><a href="https://www.facebook.com/damoss007" target="_blank">Facebook</a></li>
+      </ol>
+    </div>
+  </div><!-- /.blog-sidebar -->
