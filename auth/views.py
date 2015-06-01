@@ -24,4 +24,6 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('blog:post_list')
+    response = redirect('blog:post_list')
+    response.delete_cookie('dev_appserver_login')
+    return response

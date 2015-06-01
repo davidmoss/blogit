@@ -33,13 +33,12 @@
                     <button type="submit" class="btn btn-success">Logout</button>
                   </form>
                 {% else %}
-                <form class="navbar-form navbar-right" method="post" action="{% url 'auth:login' %}">
-                {% csrf_token %}
+                <form class="navbar-form navbar-right" method="get" action="/_ah/login">
+                    <input type="hidden" name="action" value="Login" />
+                    <input type="hidden" name="admin" value="True" />
+                    <input type="hidden" name="continue" value="{% url 'blog:post_list' %}" />
                     <div class="form-group">
-                        <input type="text" placeholder="Email" name="username" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <input type="password" placeholder="Password" name="password" class="form-control" />
+                        <input type="text" placeholder="Email" name="email" class="form-control" />
                     </div>
                     <button type="submit" class="btn btn-success">Sign in</button>
                 </form>

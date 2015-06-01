@@ -1,14 +1,9 @@
-# Run tests with "manage.py test".
-
-from django import http
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from . import views
 
-
-class HomeViewTest(TestCase):
-    def test_home(self):
-        request = http.HttpRequest()
-        response = views.home(request)
+class PostListViewTest(TestCase):
+    def test_list(self):
+        response = self.client.get(reverse('blog:post_list')).get()
         self.assertEqual(200, response.status_code)
-        self.assertIn('Hello World!', response.content)
+        self.assertIn('David Moss', response.content)

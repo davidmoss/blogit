@@ -8,7 +8,9 @@
     <!-- Posts  -->
     {% for post in posts %}
     <div class="blog-post">
+        {% if user.is_authenticated %}
         <a class="remove" href="{% url 'blog:post_delete' post.id %}"><span class="glyphicon glyphicon-remove-circle"></span></a>
+        {% endif %}
         <h2 class="blog-post-title"><a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a></h2>
         <p class="blog-post-meta">{{ post.created }}</p>
         <p>{{ post.synopsis }}</p>
