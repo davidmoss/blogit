@@ -5,5 +5,6 @@ django-csp
 git+https://github.com/adamalton/django-csp-reports.git#egg=cspreports
 django-session-csrf
 django-bootstrap3
+djangorestframework
 nose
 six

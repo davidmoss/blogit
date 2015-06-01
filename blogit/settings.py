@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'djangae.contrib.security',
     'bootstrap3',
     'blog',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -131,11 +132,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'public'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
 TEST_RUNNER = 'djangae.test_runner.SkipUnsupportedRunner'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGE_SIZE': 10
+}
 
 if DEBUG:
     CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
