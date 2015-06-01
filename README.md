@@ -16,6 +16,7 @@ Run:
 
 Run:
 
+    $ python manage.py collectstatic
     $ appcfg.py update ./
 
 ## Test
