@@ -27,21 +27,25 @@
                 {% block nav-home %}<a class="blog-nav-item" href="{% url 'blog:post_list' %}">Home</a>{% endblock %}
                 {% if user.is_authenticated %}
                 {% block nav-create %}<a class="blog-nav-item" href="{% url 'blog:post_create' %}">Add post</a>{% endblock %}
-                  <form class="navbar-form navbar-right" method="post" action="{% url 'auth:logout' %}">
+                  <form class="navbar-form navbar-right login" method="post" action="{% url 'auth:logout' %}">
                   {% csrf_token %}
                     <span class="username">Welcome {{ user.email }}</span>
                     <button type="submit" class="btn btn-success">Logout</button>
                   </form>
                 {% else %}
-                <form class="navbar-form navbar-right" method="get" action="/_ah/login">
-                    <input type="hidden" name="action" value="Login" />
-                    <input type="hidden" name="admin" value="True" />
-                    <input type="hidden" name="continue" value="{% url 'blog:post_list' %}" />
-                    <div class="form-group">
-                        <input type="text" placeholder="Email" name="email" class="form-control" />
-                    </div>
-                    <button type="submit" class="btn btn-success">Sign in</button>
-                </form>
+                    {% if DEBUG %}
+                    <form class="navbar-form navbar-right login" method="get" action="/_ah/login">
+                        <input type="hidden" name="action" value="Login" />
+                        <input type="hidden" name="admin" value="True" />
+                        <input type="hidden" name="continue" value="{% url 'blog:post_list' %}" />
+                        <div class="form-group">
+                            <input type="text" placeholder="Email" name="email" class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-success">Sign in</button>
+                    </form>
+                    {% else %}
+                        <a class="navbar-right login" href="{% url 'auth:login' %}"><button class="btn btn-success">Sign in</button></a>
+                    {% endif %}
                 {% endif %}
             </nav>
         </div>

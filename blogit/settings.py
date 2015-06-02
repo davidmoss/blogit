@@ -75,6 +75,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "session_csrf.context_processor",
+    "blog.context_processor.debug",
 )
 
 TEMPLATES = [
@@ -105,9 +106,10 @@ ROOT_URLCONF = 'blogit.urls'
 
 WSGI_APPLICATION = 'blogit.wsgi.application'
 
-AUTH_USER_MODEL = 'djangae.GaeUser'
-# AUTH_USER_MODEL = 'djangae.GaeDatastoreUser'
-DJANGAE_ALLOW_USER_PRE_CREATION = True
+AUTH_USER_MODEL = 'djangae.GaeDatastoreUser'
+
+# DJANGAE_ALLOW_USER_PRE_CREATION = True
+# LOGIN_URL = 'djangae_login_redirect'
 
 AUTHENTICATION_BACKENDS = (
     'djangae.contrib.gauth.datastore.backends.AppEngineUserAPIBackend',

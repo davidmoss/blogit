@@ -1,8 +1,10 @@
+from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.http import JsonResponse, HttpResponseRedirect
 from django.views.generic import (
     CreateView, DeleteView, DetailView, ListView
 )
+from django.utils.translation import ugettext as _
 
 from .forms import CommentForm, PostForm
 from .mixins import AjaxableResponseMixin, PostSideNavMixin
@@ -15,6 +17,11 @@ class PostCreateView(PostSideNavMixin, CreateView):
     model = Post
     success_url = reverse_lazy('blog:post_list')
     template_name = 'create.html'
+
+    def form_valid(self, form):
+        response = super(PostCreateView, self).form_valid(form)
+        messages.success(self.request, _('Post successfully created'))
+        return response
 
 
 class PostListView(PostSideNavMixin, ListView):
@@ -54,6 +61,11 @@ class PostDeleteView(PostSideNavMixin, DeleteView):
     success_url = reverse_lazy('blog:post_list')
     template_name = 'delete.html'
 
+    def delete(self, request, *args, **kwargs):
+        response = super(PostDeleteView, self).delete(request, *args, **kwargs)
+        messages.success(self.request, _('Post successfully deleted'))
+        return response
+
 
 class CommentCreateView(PostSideNavMixin, AjaxableResponseMixin, CreateView):
     http_method_names = ['post']
@@ -70,6 +82,8 @@ class CommentCreateView(PostSideNavMixin, AjaxableResponseMixin, CreateView):
         post = form.save(commit=False)
         post.post = Post.objects.get(id=post_id)
         post.save()
+
+        messages.success(self.request, _('Comment successfully created'))
 
         if self.request.is_ajax():
             data = {
@@ -90,3 +104,9 @@ class CommentDeleteView(PostSideNavMixin, DeleteView):
     def get_success_url(self):
         post_id = self.kwargs.get('post')
         return reverse_lazy('blog:post_detail', kwargs={'slug': post_id})
+
+    def delete(self, request, *args, **kwargs):
+        response = super(CommentDeleteView, self).delete(request,
+                                                         *args, **kwargs)
+        messages.success(self.request, _('Comment successfully deleted'))
+        return response
