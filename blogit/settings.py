@@ -109,7 +109,7 @@ WSGI_APPLICATION = 'blogit.wsgi.application'
 AUTH_USER_MODEL = 'djangae.GaeDatastoreUser'
 
 # DJANGAE_ALLOW_USER_PRE_CREATION = True
-# LOGIN_URL = 'djangae_login_redirect'
+LOGIN_URL = 'blog:post_list'
 
 AUTHENTICATION_BACKENDS = (
     'djangae.contrib.gauth.datastore.backends.AppEngineUserAPIBackend',

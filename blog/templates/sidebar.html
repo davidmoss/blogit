@@ -9,7 +9,7 @@
       <ol class="list-unstyled">
         {% for post_year, post_months in post_dates.items %}
           {% for post_month, post_date in post_months.items %}
-            <li><a href="?post_filter={{ post_date|date:'n_Y' }}">{{ post_date|date:'F Y' }}</a></li>
+            <li><a href="{% url 'blog:post_list' %}?post_filter={{ post_date|date:'n_Y' }}">{{ post_date|date:'F Y' }}</a></li>
           {% endfor %}
         {% endfor %}
       </ol>
