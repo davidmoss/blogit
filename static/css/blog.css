@@ -52,6 +52,9 @@ h6, .h6 {
   color: #fff;
   text-decoration: none;
 }
+.login {
+  margin: 2px;
+}
 .username {
   color: #fff;
   margin-right: 10px;

@@ -23,7 +23,7 @@ Run:
 
 Run:
 
-    $ python manage.py test
+    $ python manage.py test blog
 
 ## Credit
 
