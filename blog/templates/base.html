@@ -27,6 +27,7 @@
                 {% block nav-home %}<a class="blog-nav-item" href="{% url 'blog:post_list' %}">Home</a>{% endblock %}
                 {% if user.is_authenticated %}
                 {% block nav-create %}<a class="blog-nav-item" href="{% url 'blog:post_create' %}">Add post</a>{% endblock %}
+                <a class="blog-nav-item" href="{% url 'blog:api:api-root' %}">API</a>
                   <form class="navbar-form navbar-right login" method="post" action="{% url 'auth:logout' %}">
                   {% csrf_token %}
                     <span class="username">Welcome {{ user.email }}</span>

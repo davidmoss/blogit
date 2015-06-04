@@ -11,7 +11,7 @@ router.register(r'post', api.PostViewSet)
 
 urlpatterns = [
     url(r'^$', views.PostListView.as_view(), name='post_list'),
-    url(r'^api/', include(router.urls)),
+    url(r'^api/', include(router.urls, namespace='api')),
     url(r'^create/$', login_required(views.PostCreateView.as_view()), name='post_create'),
     url(r'^(?P<slug>[-\w]+)/$', views.PostDetailView.as_view(), name='post_detail'),
     url(r'^(?P<slug>[-\w]+)/delete/$', login_required(views.PostDeleteView.as_view()), name='post_delete'),
