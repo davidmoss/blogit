@@ -30,7 +30,3 @@ Run:
 ## Credit
 
 This was created from the barebones Django project configured for use on App Engine using [Djangae](https://github.com/potatolondon/djangae)
-
-## TODO
-
-* Fix the eventual consitency of the data back from the datastore

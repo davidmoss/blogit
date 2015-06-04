@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 
 from .forms import CommentForm, PostForm
 from .mixins import AjaxableResponseMixin, PostSideNavMixin
-from .models import Comment, Post
+from .models import Blog, Comment, Post
 
 
 class PostCreateView(PostSideNavMixin, CreateView):
@@ -27,12 +27,12 @@ class PostCreateView(PostSideNavMixin, CreateView):
 class PostListView(PostSideNavMixin, ListView):
     http_method_names = ['get']
     context_object_name = 'posts'
-    model = Post
     paginate_by = 5
     template_name = 'list.html'
 
     def get_queryset(self):
-        queryset = super(PostListView, self).get_queryset()
+        blog, __ = Blog.objects.get_or_create(name='blogit')
+        queryset = Post.objects.filter(pk__in=blog.post_ids)
         post_filter = self.request.GET.get('post_filter')
         if post_filter:
             month, year = post_filter.split('_')
@@ -47,9 +47,13 @@ class PostDetailView(PostSideNavMixin, DetailView):
     template_name = 'detail.html'
 
     def get_context_data(self, **context):
+        post = self.get_object()
         context.update({
             'form': CommentForm(),
-            'comments': Comment.objects.filter(post=self.get_object()),
+            'comments': Comment.objects.filter(
+                post=self.get_object(),
+                pk__in=post.comment_ids,
+            ),
         })
         return super(PostDetailView, self).get_context_data(**context)
 

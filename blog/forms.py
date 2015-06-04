@@ -6,7 +6,7 @@ from .models import Comment, Post
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        exclude = []
+        exclude = ['coment_ids']
 
 
 class CommentForm(ModelForm):
